@@ -4,6 +4,7 @@ from decimal import Decimal
 
 from src.components.cart.cart import Cart
 from src.components.cart.line_items import BundleLineItem, SingleLineItem
+from src.components.cart.pricing_strategies import PercentDiscountPricingStrategy
 from src.components.catalog.catalog import Catalog
 from src.components.catalog.factory import ProductFactory, ProductType
 
@@ -51,7 +52,10 @@ def main() -> None:
     print("\nCart (Composite: singles + bundle)\n")
     for i, line in enumerate(cart, start=1):
         print(f"  Line {i}: {line.describe()} -> {line.line_total()}")
-    print(f"\n  Cart subtotal: {cart.subtotal()}")
+    print(f"\n  Subtotal (lines only): {cart.subtotal()}")
+    print(f"  Total (Standard pricing): {cart.total()}")
+    cart.set_pricing_strategy(PercentDiscountPricingStrategy(Decimal("10")))
+    print(f"  Total (10% off strategy): {cart.total()}")
 
 
 if __name__ == "__main__":
