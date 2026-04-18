@@ -3,7 +3,6 @@
 from decimal import Decimal
 
 from src.components.cart.cart import Cart
-from src.components.cart.line_items import BundleLineItem, SingleLineItem
 from src.components.cart.pricing_strategies import PercentDiscountPricingStrategy
 from src.components.catalog.catalog import Catalog
 from src.components.catalog.factory import ProductFactory, ProductType
@@ -33,20 +32,12 @@ def main() -> None:
     for p in catalog:
         print(f"  {p.name} ({p.product_kind()}): {p.price} — {p.fulfillment_notes()}")
 
-    mug = catalog.get_by_id("SKU-MUG")
-    ebook = catalog.get_by_id("SKU-EBOOK")
-    assert mug is not None and ebook is not None
-
     cart = Cart()
-    cart.add_line(SingleLineItem(mug.product_id, quantity=2, unit_price=mug.price))
-    cart.add_line(
-        BundleLineItem(
-            "Reader kit",
-            [
-                SingleLineItem(mug.product_id, 1, mug.price),
-                SingleLineItem(ebook.product_id, 1, ebook.price),
-            ],
-        )
+    cart.add_product_line(catalog, "SKU-MUG", quantity=2)
+    cart.add_bundle_line(
+        catalog,
+        "Reader kit",
+        [("SKU-MUG", 1), ("SKU-EBOOK", 1)],
     )
 
     print("\nCart (Composite: singles + bundle)\n")
