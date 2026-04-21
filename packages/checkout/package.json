@@ -1,7 +1,7 @@
 {
-  "name": "@modular-ecommerce/feature-y",
+  "name": "@modular-ecommerce/checkout",
   "version": "0.0.1",
-  "description": "Feature / system 2 — checkout affordances (uses utils + ui-components)",
+  "description": "Checkout surface — totals, quantity rules, pay affordances",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -11,8 +11,8 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@modular-ecommerce/ui-components": "workspace:*",
-    "@modular-ecommerce/utils": "workspace:*"
+    "@modular-ecommerce/ui-components": "file:../ui-components",
+    "@modular-ecommerce/utils": "file:../utils"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0"
