@@ -10,3 +10,8 @@ venv/
 .mypy_cache/
 .idea/
 .vscode/
+
+node_modules/
+**/node_modules/
+packages/*/dist/
+*.tsbuildinfo

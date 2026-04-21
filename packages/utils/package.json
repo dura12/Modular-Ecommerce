@@ -1,0 +1,16 @@
+{
+  "name": "@modular-ecommerce/utils",
+  "version": "0.0.1",
+  "description": "Shared utility helpers for workspace packages",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "~5.6.3"
+  }
+}

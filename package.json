@@ -1,0 +1,15 @@
+{
+  "name": "modular-ecommerce",
+  "private": true,
+  "description": "Monorepo: npm workspaces (utils, ui-components, feature packages) + Python CBSE core",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "python:demo": "python -m src.main"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

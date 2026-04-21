@@ -1,0 +1,19 @@
+{
+  "name": "@modular-ecommerce/feature-x",
+  "version": "0.0.1",
+  "description": "Feature / system 1 — catalog listing helpers (uses utils)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@modular-ecommerce/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "~5.6.3"
+  }
+}
