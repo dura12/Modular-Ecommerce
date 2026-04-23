@@ -6,6 +6,9 @@ from src.components.cart.cart import Cart
 from src.components.cart.pricing_strategies import PercentDiscountPricingStrategy
 from src.components.catalog.catalog import Catalog
 from src.components.catalog.factory import ProductFactory, ProductType
+from src.components.payment.paypal_adapter import PayPalPaymentAdapter
+from src.components.payment.stripe_adapter import StripePaymentAdapter
+from src.interfaces.payment_gateway import IPaymentGateway
 
 
 def main() -> None:
@@ -47,6 +50,17 @@ def main() -> None:
     print(f"  Total (Standard pricing): {cart.total()}")
     cart.set_pricing_strategy(PercentDiscountPricingStrategy(Decimal("10")))
     print(f"  Total (10% off strategy): {cart.total()}")
+
+    amount = cart.total()
+    print("\nPayment (Adapter pattern — swap gateway, same client code)\n")
+    for gateway in _demo_gateways():
+        receipt = gateway.process_payment(amount, "USD")
+        print(f"  {receipt}")
+
+
+def _demo_gateways() -> list[IPaymentGateway]:
+    """Same checkout amount; different concrete adapters (component adaptation)."""
+    return [StripePaymentAdapter(), PayPalPaymentAdapter()]
 
 
 if __name__ == "__main__":

@@ -68,6 +68,8 @@ python -m src.main
 
 Run from the **repo root** so imports like `src.components...` resolve.
 
+The Python demo also exercises **`IPaymentGateway`** with **`StripePaymentAdapter`** and **`PayPalPaymentAdapter`** (fake `stripe_api` / `paypal_api` modules).
+
 ## Tooling note
 
 The coursework asks for **Yarn / npm / Nx** workspaces — this repo uses **npm workspaces**. **Nx** can be added later for task caching and affected-graph builds without removing the current layout.
