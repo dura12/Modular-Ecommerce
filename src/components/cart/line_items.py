@@ -21,6 +21,9 @@ class SingleLineItem(CartLine):
     def describe(self) -> str:
         return f"{self.product_id} x{self.quantity} @ {self.unit_price}"
 
+    def referenced_product_ids(self) -> list[str]:
+        return [self.product_id]
+
 
 class BundleLineItem(CartLine):
     """Composite: treats several CartLine entries as one sellable line (e.g. kit)."""
@@ -37,3 +40,9 @@ class BundleLineItem(CartLine):
     def describe(self) -> str:
         inner = ", ".join(c.describe() for c in self._children)
         return f"{self.label} [{inner}]"
+
+    def referenced_product_ids(self) -> list[str]:
+        ids: list[str] = []
+        for child in self._children:
+            ids.extend(child.referenced_product_ids())
+        return ids

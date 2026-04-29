@@ -14,3 +14,7 @@ class CartLine(ABC):
     @abstractmethod
     def describe(self) -> str:
         """Short label for demos and future receipts."""
+
+    @abstractmethod
+    def referenced_product_ids(self) -> list[str]:
+        """Return every product id touched by this line (including nested lines)."""

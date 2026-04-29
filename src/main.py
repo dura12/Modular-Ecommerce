@@ -6,6 +6,7 @@ from src.components.cart.cart import Cart
 from src.components.cart.pricing_strategies import PercentDiscountPricingStrategy
 from src.components.catalog.catalog import Catalog
 from src.components.catalog.factory import ProductFactory, ProductType
+from src.components.order.checkout_facade import CheckoutFacade
 from src.components.payment.paypal_adapter import PayPalPaymentAdapter
 from src.components.payment.stripe_adapter import StripePaymentAdapter
 from src.interfaces.payment_gateway import IPaymentGateway
@@ -56,6 +57,14 @@ def main() -> None:
     for gateway in _demo_gateways():
         receipt = gateway.process_payment(amount, "USD")
         print(f"  {receipt}")
+
+    print("\nCheckout Facade (validate + total + pay + confirmation)\n")
+    facade = CheckoutFacade(cart=cart, catalog=catalog, payment_gateway=PayPalPaymentAdapter())
+    confirmation = facade.process_checkout(user_id="user-123", currency="USD")
+    print(
+        f"  order_id={confirmation.order_id}, amount={confirmation.amount} "
+        f"{confirmation.currency}, receipt={confirmation.payment_receipt}"
+    )
 
 
 def _demo_gateways() -> list[IPaymentGateway]:
