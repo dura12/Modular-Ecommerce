@@ -7,6 +7,7 @@ from src.components.cart.pricing_strategies import PercentDiscountPricingStrateg
 from src.components.catalog.catalog import Catalog
 from src.components.catalog.factory import ProductFactory, ProductType
 from src.components.order.checkout_facade import CheckoutFacade
+from src.components.order.order_repository import OrderRepository
 from src.components.payment.paypal_adapter import PayPalPaymentAdapter
 from src.components.payment.stripe_adapter import StripePaymentAdapter
 from src.interfaces.payment_gateway import IPaymentGateway
@@ -59,12 +60,21 @@ def main() -> None:
         print(f"  {receipt}")
 
     print("\nCheckout Facade (validate + total + pay + confirmation)\n")
-    facade = CheckoutFacade(cart=cart, catalog=catalog, payment_gateway=PayPalPaymentAdapter())
+    order_repo = OrderRepository()
+    facade = CheckoutFacade(
+        cart=cart,
+        catalog=catalog,
+        payment_gateway=PayPalPaymentAdapter(),
+        order_repository=order_repo,
+    )
     confirmation = facade.process_checkout(user_id="user-123", currency="USD")
     print(
         f"  order_id={confirmation.order_id}, amount={confirmation.amount} "
         f"{confirmation.currency}, receipt={confirmation.payment_receipt}"
     )
+    print("\n  OrderRepository (persisted for user)")
+    for o in order_repo.list_for_user("user-123"):
+        print(f"    stored: {o.order_id} → {o.amount} {o.currency}")
 
 
 def _demo_gateways() -> list[IPaymentGateway]:
