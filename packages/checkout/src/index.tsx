@@ -1,6 +1,9 @@
 import { Button } from "@modular-ecommerce/ui-components";
 import { clamp } from "@modular-ecommerce/utils";
 
+export type { CheckoutLine, CheckoutSummaryProps } from "./CheckoutSummary";
+export { CheckoutSummary } from "./CheckoutSummary";
+
 export { formatGrandTotal, formatSubtotal } from "./totals";
 
 /** Clamp requested quantity to [1, max] for cart / checkout inputs. */
