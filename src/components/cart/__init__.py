@@ -1,6 +1,7 @@
 from src.components.cart.cart import Cart
 from src.components.cart.line_items import BundleLineItem, SingleLineItem
 from src.components.cart.pricing_strategies import (
+    FixedDiscountPricingStrategy,
     PercentDiscountPricingStrategy,
     StandardPricingStrategy,
 )
@@ -8,6 +9,7 @@ from src.components.cart.pricing_strategies import (
 __all__ = [
     "BundleLineItem",
     "Cart",
+    "FixedDiscountPricingStrategy",
     "PercentDiscountPricingStrategy",
     "SingleLineItem",
     "StandardPricingStrategy",
