@@ -1,17 +1,21 @@
 import { formatMoney } from "@modular-ecommerce/utils";
 
-import { formatGrandTotal, formatSubtotal } from "./totals";
+import { formatGrandTotal, formatNegativeMoney, formatSubtotal } from "./totals";
 
 export type CheckoutLine = { label: string; amount: number };
 
 export type CheckoutSummaryProps = {
   lines: CheckoutLine[];
   headline?: string;
+  /** Optional cart-level discount in the same units as line amounts. */
+  discount?: number;
 };
 
 /** Receipt-style panel for storefront apps (pure presentation; totals match line sum). */
 export function CheckoutSummary(props: CheckoutSummaryProps) {
   const sum = props.lines.reduce((acc, line) => acc + line.amount, 0);
+  const discount = Math.max(0, props.discount ?? 0);
+  const total = Math.max(0, sum - discount);
 
   return (
     <section
@@ -40,9 +44,23 @@ export function CheckoutSummary(props: CheckoutSummaryProps) {
           </li>
         ))}
       </ul>
+      {discount > 0 ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: 12,
+            marginBottom: 8,
+            color: "#2e7d32",
+          }}
+        >
+          <span>Discount</span>
+          <span>{formatNegativeMoney(discount)}</span>
+        </div>
+      ) : null}
       <hr style={{ border: 0, borderTop: "1px solid #eee" }} />
       <p style={{ margin: "10px 0 4px", fontWeight: 600 }}>{formatSubtotal(sum)}</p>
-      <p style={{ margin: "4px 0 0", fontWeight: 700 }}>{formatGrandTotal(sum)}</p>
+      <p style={{ margin: "4px 0 0", fontWeight: 700 }}>{formatGrandTotal(total)}</p>
     </section>
   );
 }
